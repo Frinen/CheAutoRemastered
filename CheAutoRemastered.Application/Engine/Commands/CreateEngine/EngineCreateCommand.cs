@@ -8,7 +8,7 @@ using MediatR;
 
 namespace CheAutoRemastered.Application.Engine.Commands.CreateEngine
 {
-    public class EngineCreateCommand : IRequest
+    public class EngineCreateCommand : IRequest<string>
     {
         public string Name { get; set; }
         public int PistonsCount { get; set; }
@@ -17,18 +17,18 @@ namespace CheAutoRemastered.Application.Engine.Commands.CreateEngine
         public double Torque { get; set; }
     }
 
-    public class Handler : IRequestHandler<EngineCreateCommand>
+    public class Handler : IRequestHandler<EngineCreateCommand, string>
     {
         private readonly ICheAutoDbContext _context;
         public Handler(IMediator mediator, ICheAutoDbContext context)
         {
             _context = context;
         }
-        public async Task<Unit> Handle(EngineCreateCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(EngineCreateCommand request, CancellationToken cancellationToken)
         {
             var entity = new Domain.Models.Engine
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Deleted = false,
                 Name = request.Name,
                 PistonsCount = request.PistonsCount,
@@ -36,12 +36,19 @@ namespace CheAutoRemastered.Application.Engine.Commands.CreateEngine
                 Power = request.Power,
                 Torque = request.Torque
             };
+            try
+            {
+                _context.Engines.Add(entity);
 
-            _context.Engines.Add(entity);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
+            return entity.Id.ToString();
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
+﻿using System.Reflection;
 using AutoMapper;
 using MediatR;
-
-namespace CheAutoRemastered.Core
+using Microsoft.Extensions.DependencyInjection;
+namespace CheAutoRemastered.Application
 {
-    public static class DependencyInjection
+    public static class ApplicationDependencyInjection
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
@@ -15,6 +13,5 @@ namespace CheAutoRemastered.Core
 
             return services;
         }
-    }   
+    }
 }
-

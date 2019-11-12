@@ -1,12 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191112115559_init.cs" />
+    <Compile Remove="Migrations\20191112115559_init.Designer.cs" />
+    <Compile Remove="Migrations\20191112120715_addCarComplectation.cs" />
+    <Compile Remove="Migrations\20191112120715_addCarComplectation.Designer.cs" />
+    <Compile Remove="Migrations\20191112121028_test.cs" />
+    <Compile Remove="Migrations\20191112121028_test.Designer.cs" />
+    <Compile Remove="Migrations\20191112121657_test.cs" />
+    <Compile Remove="Migrations\20191112121657_test.Designer.cs" />
+    <Compile Remove="Migrations\20191112134839_test.cs" />
+    <Compile Remove="Migrations\20191112134839_test.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0-preview2.19525.5" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0-preview2" />
   </ItemGroup>
 
   <ItemGroup>

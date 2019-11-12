@@ -11,7 +11,8 @@ namespace CheAutoRemastered.Application.Interfaces
     public interface ICheAutoDbContext
     {
         DbSet<Domain.Models.Engine> Engines { get; set; }
-        DbSet<Country> Countries { get; set; }
+        //DbSet<Country> Countries { get; set; }
+        //DbSet<CarComplectation> CarComplectations { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
