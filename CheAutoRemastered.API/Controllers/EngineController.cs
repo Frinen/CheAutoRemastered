@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CheAutoRemastered.Application.Engine.Commands.CreateEngine;
+﻿using CheAutoRemastered.Application.Engine.Commands.CreateEngine;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CheAutoRemastered.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
 

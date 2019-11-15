@@ -1,7 +1,9 @@
 using System.Reflection;
 using CheAutoRemastered.Application;
 using CheAutoRemastered.Core;
+using Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,16 +28,17 @@ namespace CheAutoRemastered.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
-            
+
+            services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,13 +49,12 @@ namespace CheAutoRemastered.API
                 app.UseDeveloperExceptionPage();
             }
             app.UseSwagger();
-
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+            app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

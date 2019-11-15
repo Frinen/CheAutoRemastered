@@ -38,9 +38,9 @@ namespace CheAutoRemastered.Application.Engine.Commands.CreateEngine
             };
             try
             {
-                _context.Engines.Add(entity);
+                await _context.Engines.AddAsync(entity, cancellationToken);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                var res = _context.SaveChangesAsync(cancellationToken).Result;
             }
             catch (Exception e)
             {

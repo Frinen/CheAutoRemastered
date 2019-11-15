@@ -14,6 +14,10 @@ namespace Persistence
         //public DbSet<CarComplectation> CarComplectations { get; set; }
         public CheAutoDbContext(DbContextOptions<CheAutoDbContext> options) : base(options){}
 
-
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            ChangeTracker.DetectChanges();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
     }
 }
