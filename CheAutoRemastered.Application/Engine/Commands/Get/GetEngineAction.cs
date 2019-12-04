@@ -1,34 +1,39 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using CheAutoRemastered.Application.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CheAutoRemastered.Application.Engine.Commands.Get
 {
-    class GetEngineAction : IRequest<List<Domain.Models.Engine>>
+    public class GetEngineAction : IRequest<List<Domain.Models.Engine>>
     { }
-    public class GetTodosQueryHandler : IRequestHandler<GetEngineAction, List<Domain.Models.Engine>>
+    public class GetEngineActionHandler : IRequestHandler<GetEngineAction, List<Domain.Models.Engine>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ICheAutoDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetTodosQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetEngineActionHandler(ICheAutoDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<TodosVm> Handle(GetTodosQuery request, CancellationToken cancellationToken)
+        public async Task<List<Domain.Models.Engine>> Handle(GetEngineAction request, CancellationToken cancellationToken)
         {
-            var vm = new TodosVm();
+            var engineList = new List<Domain.Models.Engine>();
 
-            vm.Lists = await _context.TodoLists
-                .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
-                .OrderBy(t => t.Title)
-                .ToListAsync(cancellationToken);
+            engineList =  _context.Engines
+                .OrderBy(t => t.Name)
+                .ToList();
 
-            return vm;
+            return engineList;
         }
     }
     

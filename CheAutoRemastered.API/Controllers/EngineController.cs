@@ -1,11 +1,14 @@
 ﻿using CheAutoRemastered.Application.Engine.Commands.CreateEngine;
+using CheAutoRemastered.Application.Engine.Commands.Delete;
+using CheAutoRemastered.Application.Engine.Commands.Get;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CheAutoRemastered.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
 
@@ -20,6 +23,21 @@ namespace CheAutoRemastered.API.Controllers
 
         [HttpPost]
         public IActionResult CreateEngine([FromBody] EngineCreateCommand command)
+        {
+            _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetEngines()
+        {
+            var command = new GetEngineAction();
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteEngines([FromBody] DeleteEngineCommand command)
         {
             _mediator.Send(command);
             return Ok();

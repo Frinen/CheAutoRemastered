@@ -24,7 +24,7 @@ namespace CheAutoRemastered.Application.Engine.Commands.Delete
 
             public async Task<Unit> Handle(DeleteEngineCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Engines.FindAsync(request.Id);
+                var entity = await _context.Engines.FindAsync(request.Id.ToString());
 
                 if (entity == null)
                 {

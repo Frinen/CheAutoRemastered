@@ -1,0 +1,26 @@
+﻿@page "/Engines"
+@inherits EnginePageModel
+
+<h3>EnginePage</h3>
+@if (Engines != null)
+{
+<table class="table table-hover mdc-table" style="margin:0px">
+    <thead>
+        <tr class="mdc-table-header-row ">
+            <th>Name</th>
+            <th>Power</th>
+            <th>Torque</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var engine in Engines)
+        {
+            <tr class="c-pointer dashboard-table-row" >
+                <td>@engine.Name</td>
+                <td>@engine.Power</td>
+                <td>@engine.Torque</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
