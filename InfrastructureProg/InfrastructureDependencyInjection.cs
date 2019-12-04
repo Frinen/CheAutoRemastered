@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+using CheAutoRemastered.Application.Interfaces;
 using Infrastructure.Identity;
+using Infrastructure.Persistense;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +27,18 @@ namespace Infrastructure
                 options.Authority = $"https://{configuration["Auth0:Domain"]}/";
                 options.Audience = configuration["Auth0:Audience"];
             });
+
+            Console.WriteLine(configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+               options.UseNpgsql(
+                   configuration.GetConnectionString("CheAuto"),
+                   b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+            services.AddScoped<ICheAutoDbContext>(provider => provider.GetService<ApplicationDbContext>());
+
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
         }

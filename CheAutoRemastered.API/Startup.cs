@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using Persistence;
 
 namespace CheAutoRemastered.API
 {
@@ -34,7 +33,6 @@ namespace CheAutoRemastered.API
             });
 
             services.AddInfrastructure(Configuration);
-            services.AddPersistence(Configuration);
             services.AddApplication();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
