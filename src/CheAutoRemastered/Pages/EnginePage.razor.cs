@@ -12,11 +12,12 @@ namespace CheAutoRemastered.Presentation.Pages
     public class EnginePageModel : ComponentBase
     {
         [Inject] HttpClient HttpClient { get; set; }
-        public List<Engine> Engines { get; set; } 
+        public List<Engine> Engines { get; set; }  = new List<Engine>();
         protected override async Task OnParametersSetAsync()
         {
             var response = await HttpClient.GetAsync("http://localhost:51734/Engine");
-            var Engines = JsonConvert.DeserializeObject<List<Engine>>(await response.Content.ReadAsStringAsync());
+            Engines = JsonConvert.DeserializeObject<List<Engine>>(await response.Content.ReadAsStringAsync());
+            StateHasChanged();
 
             await base.OnParametersSetAsync();
         }

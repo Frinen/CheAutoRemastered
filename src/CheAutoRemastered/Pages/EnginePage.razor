@@ -2,7 +2,10 @@
 @inherits EnginePageModel
 
 <h3>EnginePage</h3>
-@if (Engines != null)
+
+<h2>Engines.Count @Engines.Count</h2>
+
+@if (Engines.Count != 0)
 {
 <table class="table table-hover mdc-table" style="margin:0px">
     <thead>
