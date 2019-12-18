@@ -41,11 +41,11 @@ namespace CheAutoRemastered.API.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKey"));
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YVBy0OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SBM"));
 
                 var token = new JwtSecurityToken(
-                    issuer: "http://dotnetdetail.net",
-                    audience: "http://dotnetdetail.net",
+                    issuer: "http://localhost:51734/",
+                    audience: "http://localhost:51734/",
                     expires: DateTime.Now.AddHours(3),
                     claims: authClaims,
                     signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
@@ -61,7 +61,7 @@ namespace CheAutoRemastered.API.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("login")]
         public async Task<IActionResult> Login([FromQuery]string email, [FromQuery]string password)
         {

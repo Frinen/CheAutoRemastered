@@ -11,18 +11,22 @@
     <thead>
         <tr class="mdc-table-header-row ">
             <th>Name</th>
+            <th>PistonsCount</th>
             <th>Power</th>
             <th>Torque</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var engine in Engines)
         {
-            <tr class="c-pointer dashboard-table-row" >
-                <td>@engine.Name</td>
-                <td>@engine.Power</td>
-                <td>@engine.Torque</td>
-            </tr>
+        <tr class="c-pointer dashboard-table-row">
+            <td>@engine.Name</td>
+            <td>@engine.PistonsCount</td>
+            <td>@engine.Power</td>
+            <td>@engine.Torque</td>
+            <td><button @onclick="@(() => Delete(engine.Id))">delete</button></td>
+        </tr>
         }
     </tbody>
 </table>

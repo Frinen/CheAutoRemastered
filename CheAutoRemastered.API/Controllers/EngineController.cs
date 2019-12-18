@@ -1,4 +1,5 @@
-﻿using CheAutoRemastered.Application.Engine.Commands.CreateEngine;
+﻿using System;
+using CheAutoRemastered.Application.Engine.Commands.CreateEngine;
 using CheAutoRemastered.Application.Engine.Commands.Delete;
 using CheAutoRemastered.Application.Engine.Commands.Get;
 using MediatR;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CheAutoRemastered.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
 
@@ -37,9 +38,9 @@ namespace CheAutoRemastered.API.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteEngines([FromBody] DeleteEngineCommand command)
+        public IActionResult DeleteEngines(Guid id)
         {
-            _mediator.Send(command);
+            _mediator.Send(new DeleteEngineCommand(){Id = id});
             return Ok();
         }
     }

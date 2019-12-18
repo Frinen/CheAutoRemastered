@@ -10,12 +10,6 @@ namespace CheAutoRemastered.Presentation.Data
 {
     public class WeatherForecastService
     {
-        HttpClient _httpClient;
-        public WeatherForecastService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -30,12 +24,6 @@ namespace CheAutoRemastered.Presentation.Data
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             }).ToArray());
-        }
-
-        public async Task<List<Engine>> GetEngines()
-        {
-            var response = await _httpClient.GetAsync("http://localhost:51734/Engine");
-            return JsonConvert.DeserializeObject<List<Engine>>(await response.Content.ReadAsStringAsync());
         }
     }
 }

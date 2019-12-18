@@ -16,6 +16,8 @@ using Microsoft.Extensions.Hosting;
 using CheAutoRemastered.Presentation.Areas.Identity;
 using CheAutoRemastered.Presentation.Data;
 using System.Net.Http;
+using Blazored.LocalStorage;
+using CheAutoRemastered.Presentation.Services;
 
 namespace CheAutoRemastered.Presentation
 {
@@ -32,15 +34,14 @@ namespace CheAutoRemastered.Presentation
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            services.AddBlazoredLocalStorage();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddHttpClient<WeatherForecastService>();
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
             {
                 // Setup HttpClient for server side in a client side compatible fashion

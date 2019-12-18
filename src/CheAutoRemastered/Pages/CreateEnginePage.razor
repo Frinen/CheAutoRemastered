@@ -1,0 +1,22 @@
+﻿@page "/createEngine"
+@inherits CreateEnginePageModel
+
+<h3>CreateEnginePage</h3>
+
+Name:
+<input type="text" @bind-value="Engine.Name" />
+<p></p>
+PistonsCount:
+<input type="text" @bind-value="Engine.PistonsCount" />
+<p></p>
+Power:
+<input type="text" @bind-value="Engine.Power" />
+<p></p>
+Torque:
+<input type="text" @bind-value="Engine.Torque" />
+<p></p>
+Volume:
+<input type="text" @bind-value="Engine.Volume" />
+<p></p>
+
+<button @onclick="Create">Create</button>

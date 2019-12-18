@@ -24,16 +24,24 @@ namespace CheAutoRemastered.Application.Engine.Commands.Delete
 
             public async Task<Unit> Handle(DeleteEngineCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Engines.FindAsync(request.Id.ToString());
-
-                if (entity == null)
+                try
                 {
-                    throw new NotFoundException(nameof(Engine), request.Id);
+                    var entity = await _context.Engines.FindAsync(request.Id.ToString());
+
+                    if (entity == null)
+                    {
+                        throw new NotFoundException(nameof(Engine), request.Id);
+                    }
+
+                    _context.Engines.Remove(entity);
+
+                    var res = _context.SaveChangesAsync(cancellationToken).Result;
                 }
-
-                _context.Engines.Remove(entity);
-
-                await _context.SaveChangesAsync(cancellationToken);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
 
                 return Unit.Value;
             }
